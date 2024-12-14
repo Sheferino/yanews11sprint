@@ -12,6 +12,8 @@ __pycache__/
 .AppleDouble
 .LSOverride
 
+.vscode
+
 *.sublime-project
 *.sublime-workspace
 
