@@ -9,6 +9,8 @@ from django.utils import timezone
 from news.models import News, Comment
 
 
+COMMENT_FROM_FORM = 'кг/ам' 
+
 # объект новости в БД
 @pytest.fixture
 def news():
@@ -22,7 +24,7 @@ def news():
 # пользователь-автор
 @pytest.fixture
 def author(django_user_model):
-    # Используем встроенную фикстуру для модели пользователей django_user_model.
+    # Встроенная фикстура для модели пользователей django_user_model.
     return django_user_model.objects.create(username='Автор')
 
 
@@ -54,7 +56,7 @@ def comment(author, news):
     comment = Comment.objects.create(
         news=news,
         author=author,
-        text='кг/ам'
+        text='кг/ам изначальный'
     )
     return comment
 
@@ -91,6 +93,15 @@ def generate_comments(news, author):
         # И сохраняем эти изменения.
         comment.save()
 
+
+# заполненная форма комментария
+@pytest.fixture
+def comment_form_data(news, author):
+    return {
+        'news': news,
+        'author': author,
+        'text': 'Комментарий из формы'
+    }
 
 '''
 # фикстура
