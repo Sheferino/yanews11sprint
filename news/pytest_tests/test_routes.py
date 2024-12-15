@@ -29,8 +29,7 @@ def test_availability_news(client, news):
 
 # доступ к работе с комментарием для автора
 @pytest.mark.parametrize(
-    'urlname',  # Имя параметра функции.
-    # Значения, которые будут передаваться в name.
+    'urlname',
     ('news:edit', 'news:delete')
 )
 @pytest.mark.django_db
@@ -42,8 +41,7 @@ def test_comment_author(comment, author_client, urlname):
 
 # доступ к работе с комментарием для неавтора
 @pytest.mark.parametrize(
-    'urlname',  # Имя параметра функции.
-    # Значения, которые будут передаваться в name.
+    'urlname',
     ('news:edit', 'news:delete')
 )
 @pytest.mark.django_db
@@ -55,8 +53,7 @@ def test_comment_notauthor(comment, not_author_client, urlname):
 
 # доступ к работе с комментарием для анонима
 @pytest.mark.parametrize(
-    'urlname',  # Имя параметра функции.
-    # Значения, которые будут передаваться в name.
+    'urlname',
     ('news:edit', 'news:delete')
 )
 @pytest.mark.django_db

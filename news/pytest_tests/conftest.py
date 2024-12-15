@@ -1,8 +1,10 @@
-# conftest.py
+from datetime import datetime, timedelta
+
 import pytest
 
-# тестовый клиент
+from django.conf import settings
 from django.test.client import Client
+from django.utils import timezone
 
 from news.models import News, Comment
 
@@ -16,9 +18,8 @@ def news():
     )
     return news
 
+
 # пользователь-автор
-
-
 @pytest.fixture
 def author(django_user_model):
     # Используем встроенную фикстуру для модели пользователей django_user_model.
@@ -56,6 +57,39 @@ def comment(author, news):
         text='кг/ам'
     )
     return comment
+
+
+# массив новостей
+@pytest.fixture
+def generate_news():
+    today = datetime.today()
+    news_list = []
+    for idx in range(settings.NEWS_COUNT_ON_HOME_PAGE):
+        news_list.append(News(
+            title=f'Заголовок пробной новости {idx}',
+            text=f'Просто текст {idx} новости',
+            date=today - timedelta(days=idx)
+        ))
+    News.objects.bulk_create(news_list)
+
+
+# массив комментариев
+@pytest.fixture
+def generate_comments(news, author):
+    # Запоминаем текущее время (с указание часового пояса):
+    now = timezone.now()
+    # Создаём несколько комментариев с разным временем в цикле.
+    for idx in range(5):
+        # Создаём объект и записываем его в переменную.
+        comment = Comment.objects.create(
+            news=news, author=author, text=f'Кг/ам # {idx}',
+        )
+        # Сразу после создания меняем время создания комментария.
+        # изначально его задать нельзя, поскольку при создании объекта это
+        # поле заполняется автоматически
+        comment.created = now + timedelta(days=idx)
+        # И сохраняем эти изменения.
+        comment.save()
 
 
 '''
