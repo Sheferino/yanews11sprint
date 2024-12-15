@@ -9,8 +9,6 @@ from django.utils import timezone
 from news.models import News, Comment
 
 
-COMMENT_FROM_FORM = 'кг/ам' 
-
 # объект новости в БД
 @pytest.fixture
 def news():
@@ -102,45 +100,3 @@ def comment_form_data(news, author):
         'author': author,
         'text': 'Комментарий из формы'
     }
-
-'''
-# фикстура
-@pytest.fixture
-# Используем встроенную фикстуру для модели пользователей django_user_model.
-def author(django_user_model):
-    return django_user_model.objects.create(username='Автор')
-
-
-@pytest.fixture
-def not_author(django_user_model):
-    return django_user_model.objects.create(username='Автор2')
-
-
-
-
-
-@pytest.fixture
-def not_author_client(not_author):
-    client = Client()
-    client.force_login(not_author)  # Логиним неавтора-пользователя в клиенте.
-    return client
-
-
-
-
-@pytest.fixture
-# Фикстура запрашивает другую фикстуру создания заметки.
-def slug_for_args(note):
-    # И возвращает кортеж, который содержит slug заметки.
-    # На то, что это кортеж, указывает запятая в конце выражения.
-    return (note.slug,)
-
-
-@pytest.fixture
-def form_data():
-    return {
-        'title': 'Это новая заметка',
-        'text': 'С другим текстом',
-        'slug': 'new-slug'
-    }
-'''

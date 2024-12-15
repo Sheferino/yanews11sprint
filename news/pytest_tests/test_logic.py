@@ -1,11 +1,8 @@
-from http import HTTPStatus
-
 from django.urls import reverse
-from pytest_django.asserts import assertRedirects, assertFormError
+from pytest_django.asserts import assertFormError
 import pytest
-from pytils.translit import slugify
 
-from news.models import News, Comment
+from news.models import Comment
 from news.forms import BAD_WORDS, WARNING
 
 
